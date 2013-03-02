@@ -47,6 +47,20 @@ Turtle.prototype.walk = function (steps) {
   c.moveTo(this.x, this.y);
   this.x += this.dx(steps);
   this.y -= this.dy(steps);
+
   c.lineTo(this.x, this.y);
+  c.stroke();
+};
+Turtle.prototype.curve = function (pos_x, pos_y, control_x, control_y) {
+  var c = this.cvs, deltaY = pos_y - this.y, deltaX =pos_x - this.x;
+  var finalAngle = 180+(Math.atan2(deltaY, deltaX) * 180 / Math.PI);
+  c.beginPath();
+  c.moveTo(this.x, this.y);
+  // c.moveTo(this.x, this.y);
+  // this.x += pos_x;
+  // this.y -= pos_y;
+  c.quadraticCurveTo(control_x, control_y,pos_x,pos_y);
+  this.jump(pos_x,pos_y);
+  this.angle = finalAngle;
   c.stroke();
 };
